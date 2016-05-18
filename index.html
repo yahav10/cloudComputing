@@ -15,6 +15,9 @@
 <script src="js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
 <script src="js/fileinput.min.js" type="text/javascript"></script>
 
+<script src="get_put.js" type="text/javascript"></script>
+<link rel="stylesheet" href="style/style.css">
+
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -59,16 +62,34 @@
         </div>
     </div>
 -->
+    <div class="clear"></div>
 
     <div class="form-group">
       <label for="inputdefault">Title: </label>
       <input class="form-control" id="title" type="text">
     </div>
     
-        <div class="form-group">
+    <div class="form-group">
       <label for="inputdefault">Creator: </label>
       <input class="form-control" id="creator" type="text">
     </div>
+
+    <div class="clear"></div>
+
+    <div class="form-group">
+      <label for="inputdefault">Image By Id: </label>
+      <input class="form-control" id="imageId" list="browsers" placeholder="Id => 1 - 33" type="text">
+    </div>
+
+    <select id="imageSize" class="selectSize">
+      <option value="L">Large</option>
+      <option value="M">Medium</option>
+      <option value="S">Small</option>
+    </select> 
+
+    <button class="send"><a href="JavaScript:getImage();">Send</a></button>
+
+    <div class="clear"></div>
 
 <!--
         <input type="file" id="file_input"/>
@@ -139,5 +160,43 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="css/blueimp-gallery.min.css"></script>
 <script src="js/demo.js"></script>
+
+<datalist id="browsers">
+  <option value="1">
+  <option value="2">
+  <option value="3">
+  <option value="4">
+  <option value="5">
+  <option value="6">
+  <option value="7">
+  <option value="8">
+  <option value="9">
+  <option value="10">
+  <option value="11">
+  <option value="12">
+  <option value="13">
+  <option value="14">
+  <option value="15">
+  <option value="16">
+  <option value="17">
+  <option value="18">
+  <option value="19">
+  <option value="20">
+  <option value="21">
+  <option value="22">
+  <option value="23">
+  <option value="24">
+  <option value="25">
+  <option value="26">
+  <option value="27">
+  <option value="28">
+  <option value="29">
+  <option value="30">
+  <option value="31">
+  <option value="32">
+  <option value="33">
+</datalist>
+
+
 </body>
 </html>
