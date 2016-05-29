@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Bootstrap Image Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="css/bootstrap-image-gallery.css">
+<link rel="stylesheet" href="css/demo.css">
+<link rel="stylesheet" href="js/demo.js">
+<link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
+<script src="js/fileinput.min.js" type="text/javascript"></script>
+ <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+<script src="index.js" type="text/javascript"></script>
+<link rel="stylesheet" href="style/style.css">
+
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-fixed-top .navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://github.com/blueimp/Bootstrap-Image-Gallery">Image Gallery</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+<!--
+                <li><a href="https://github.com/blueimp/Bootstrap-Image-Gallery/tags">Download</a></li>
+                <li><a href="https://github.com/blueimp/Bootstrap-Image-Gallery">Source Code</a></li>
+                <li><a href="https://github.com/blueimp/Bootstrap-Image-Gallery/blob/master/README.md">Documentation</a></li>
+-->
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>Gal & Tom Image Gallery</h1>
+    <form class="form-inline">
+    
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+    <span class="btn btn-default btn-file"><span>Choose file</span><input id="path" type="file" /></span>
+    <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+    <button class="send" id="upload-button" id="upload-button"><a href="JavaScript:uploadImage();">Send</a></button>
+    <div id="results"></div>
+</div>
+
+<!--
+        <div class="form-group">
+                <div class="col-lg-6 col-sm-6 col-12">
+            <span class="file-input btn btn-primary btn-file">
+                Add Image&hellip; <input type="file" multiple>
+            </span>
+        </div>
+    </div>
+-->
+    <div class="clear"></div>
+
+    <!--<div class="form-group">
+    <label for="inputdefault">Title: </label>
+      <input class="form-control" id="title" type="text">
+    </div>
+    
+    <div class="form-group">
+      <label for="inputdefault">Creator: </label>
+      <input class="form-control" id="creator" type="text">
+    </div>-->
+
+    <label for="inputdefault">Get All Images from Mongo DB and Amazon S3 =====> </label>
+    <button class="send"><a href="JavaScript:getAllPics();">Get All Pictures</a></button>
+
+    <br><br>
+
+    <div class="form-group">
+      <label for="inputdefault">Image By Id: </label>
+      <input class="form-control" id="imageId" list="browsers" placeholder="Id => 1 - 33" type="text">
+    </div>
+
+    <select id="imageSize" class="selectSize">
+      <option value="L">Large</option>
+      <option value="M">Medium</option>
+      <option value="S">Small</option>
+    </select> 
+
+    <button class="send"><a href="JavaScript:getImageById();">Send</a></button>
+
+    <br><br>
+
+    <div class="form-group">
+      <label for="inputdefault">Image By Color: </label>
+      <input class="form-control" id="imageColor" list="browsers2" placeholder="Id => red / blue / green / yellow" type="text">
+    </div>
+
+    <button class="send"><a href="JavaScript:getImageByColor();">Send</a></button>
+
+    <div class="clear"></div>
+
+<!--
+        <input type="file" id="file_input"/>
+        <p id="status">Please select a file</p>
+-->
+
+<!--
+            <button id="image-gallery-button" type="button" class="btn btn-success btn-lg">
+                <i class="glyphicon glyphicon-film"></i>
+                Add Image
+            </button>
+-->
+        <!--<br>
+        <br>
+        <div class="form-group">
+            <button id="image-gallery-button" type="button" class="btn btn-info btn-lg">
+                <i class="glyphicon glyphicon-picture"></i>Upload Image</button>
+        </div>
+        <div class="form-group">
+            <button id="image-gallery-button" type="button" class="btn btn-danger btn-lg">
+                <i class="glyphicon glyphicon-remove"></i>Remove Image</button>
+        </div>-->
+    </form>
+    <br>
+    <!-- The container for the list of example images -->
+    <div id="links">
+    <a href="img/banana.jpg" title="Banana" data-description="This is a banana.">Banana</a>    
+    </div>
+    <br>
+</div>
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body next"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                        Next
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation and button states -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="css/blueimp-gallery.min.css"></script>
+<script src="js/demo.js"></script>
+
+<datalist id="browsers">
+  <option value="1">
+  <option value="2">
+  <option value="3">
+  <option value="4">
+  <option value="5">
+  <option value="6">
+  <option value="7">
+  <option value="8">
+  <option value="9">
+  <option value="10">
+  <option value="11">
+  <option value="12">
+  <option value="13">
+  <option value="14">
+  <option value="15">
+  <option value="16">
+  <option value="17">
+  <option value="18">
+  <option value="19">
+  <option value="20">
+  <option value="21">
+  <option value="22">
+  <option value="23">
+  <option value="24">
+  <option value="25">
+  <option value="26">
+  <option value="27">
+  <option value="28">
+  <option value="29">
+  <option value="30">
+  <option value="31">
+  <option value="32">
+  <option value="33">
+</datalist>
+
+<datalist id="browsers2">
+  <option value="yellow">
+  <option value="red">
+  <option value="blue">
+  <option value="green">
+</datalist>
+
+
+</body>
+</html>
