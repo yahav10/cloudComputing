@@ -12,7 +12,7 @@ var http = require('http');
 var Upload = require('s3-uploader');
 var restify = require('restify');
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8080);
 
 // connection error
 mongoose.connection.once('error', function (err) {
@@ -134,7 +134,7 @@ function getImageById(){
 		return;
 	}
 
-		url = "http://localhost:3000/PicById/"+Input.value+"/"+Size.value;
+		url = "https://s3-us-west-2.amazonaws.com/galshaharbucket/PicById/"+Input.value+"/"+Size.value;
 		//url = 'https://s3-us-west-2.amazonaws.com/galshaharbucket/'+name;
 
 		if(Size.value=="L"){
@@ -162,7 +162,7 @@ function getImageByColor(str){
 		return;
 	}
 	else{
-		path = "http://localhost:3000/PicByColor/"+Input.value;
+		path = "https://s3-us-west-2.amazonaws.com/galshaharbucket/PicByColor/"+Input.value;
 		popupWindow = window.open(
 		path,'popUpWindow','height=608,width=1020,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
 	}
@@ -173,13 +173,14 @@ function uploadImage(){
 		var results = document.getElementById('results');
 		var file = fileChooser.files[0];
 		alert(file.name);
-		path = "http://localhost:3000/Upload/"+file.name+"";
+		path = "https://s3-us-west-2.amazonaws.com/galshaharbucket/Upload/"+file.name+"";
 		popupWindow = window.open(
 		path,'popUpWindow','height=608,width=1020,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
 }
 
 function getAllPics(){
-		path = "http://localhost:3000/GetAllPictures";
+		path = "https://s3-us-west-2.amazonaws.com/galshaharbucket/GetAllPictures";
+    //galshaharbucket.s3-website-us-west-2.amazonaws.com
 		popupWindow = window.open(
 		path,'popUpWindow','height=608,width=1020,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
 
